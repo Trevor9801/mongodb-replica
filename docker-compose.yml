@@ -15,8 +15,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: username
       MONGO_INITDB_ROOT_PASSWORD: password123
     command: ["mongod", "--replSet", "mongo-cluster", "--auth", "--keyFile", "/etc/mongo-keyfile"]
-    healthcheck:
-      test: test $$(echo "rs.initiate({_id:'mongo-cluster',members:[{_id:0,host:\"mongo-replica-primary:27017\"},{_id:1,host:\"mongo-replica-secondary-2:27017\"},{_id:2,host:\"mongo-replica-secondary-3:27017\"}]}).ok || rs.status().ok" | mongosh --port 27017 --quiet) -eq 1
     networks:
       - mongo-cluster
 
